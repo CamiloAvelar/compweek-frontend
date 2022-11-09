@@ -1,0 +1,23 @@
+{
+  "dev": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-compweek-dev-192653-authRole",
+      "UnauthRoleArn": "arn:aws:iam::217411580783:role/amplify-compweek-dev-192653-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::217411580783:role/amplify-compweek-dev-192653-authRole",
+      "Region": "us-east-1",
+      "DeploymentBucketName": "amplify-compweek-dev-192653-deployment",
+      "UnauthRoleName": "amplify-compweek-dev-192653-unauthRole",
+      "StackName": "amplify-compweek-dev-192653",
+      "StackId": "arn:aws:cloudformation:us-east-1:217411580783:stack/amplify-compweek-dev-192653/746a7800-5fb4-11ed-af3a-0e5ac9892743",
+      "AmplifyAppId": "d1ucwjszpmyf6y"
+    },
+    "categories": {
+      "hosting": {
+        "amplifyhosting": {
+          "appId": "d1ucwjszpmyf6y",
+          "type": "manual"
+        }
+      }
+    }
+  }
+}

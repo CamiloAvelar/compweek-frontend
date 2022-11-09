@@ -1,7 +1,7 @@
 {
   "name": "compweek",
   "version": "0.0.1",
-  "description": "A Quasar Project",
+  "description": "Projeto inicial para Criar e consultar cobranças Pix",
   "productName": "Compweek",
   "author": "Camilo Avelar <contato@camiloavelar.com>",
   "private": true,

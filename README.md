@@ -1,6 +1,6 @@
 # Compweek (compweek)
 
-Projeto inicial para realizar Criar e consultar cobranças Pix
+Projeto inicial para Criar e consultar cobranças Pix
 
 ## Inicia projeto
 ```bash

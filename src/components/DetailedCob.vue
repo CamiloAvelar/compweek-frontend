@@ -24,7 +24,7 @@
           <q-item-section>
             <q-item-label>Solicitação Pagador</q-item-label>
             <q-item-label caption lines="1">{{
-              cob.solicitacaoPagador
+                cob.solicitacaoPagador
             }}</q-item-label>
           </q-item-section>
         </q-item>
@@ -35,7 +35,7 @@
           <q-item-section>
             <q-item-label>Data criação</q-item-label>
             <q-item-label caption lines="1">{{
-              cob.calendario.criacao
+                cob.calendario.criacao
             }}</q-item-label>
           </q-item-section>
         </q-item>
@@ -54,9 +54,7 @@
         <q-item>
           <q-item-section>
             <q-item-label>Valor</q-item-label>
-            <q-item-label caption lines="1"
-              >R$ {{ cob.valor.original }}</q-item-label
-            >
+            <q-item-label caption lines="1">R$ {{ cob.valor.original }}</q-item-label>
           </q-item-section>
         </q-item>
 
@@ -70,7 +68,7 @@
                 <q-item-section>
                   <q-item-label>Nome</q-item-label>
                   <q-item-label caption lines="1">{{
-                    cob.devedor.nome
+                      cob.devedor.nome
                   }}</q-item-label>
                 </q-item-section>
               </q-item>
@@ -81,7 +79,7 @@
                 <q-item-section>
                   <q-item-label>Documento</q-item-label>
                   <q-item-label caption lines="1">{{
-                    cob.devedor.cpf
+                      cob.devedor.cpf
                   }}</q-item-label>
                 </q-item-section>
               </q-item>
@@ -99,7 +97,7 @@
   </q-card>
 </template>
 <script>
-import { defineComponent, ref } from "vue";
+import { defineComponent, } from "vue";
 
 export default defineComponent({
   name: "DetailedCob",

@@ -1,10 +1,5 @@
 <template>
-  <q-expansion-item
-    switch-toggle-side
-    expand-icon-toggle
-    expand-separator
-    @show="openItem(itemId)"
-  >
+  <q-expansion-item switch-toggle-side expand-icon-toggle expand-separator @show="openItem(itemId)">
     <template v-slot:header>
       <q-item-section>
         {{ itemDescription }}
@@ -20,12 +15,8 @@
         <DetailedCob v-if="type === 'cob'" v-bind="item"></DetailedCob>
         <DetailedPix v-if="type === 'pix'" v-bind="item"></DetailedPix>
       </q-card-section>
-      <q-inner-loading
-        :showing="loading"
-        label="Carregando..."
-        label-class="text-teal"
-        label-style="font-size: 1.1em"
-      />
+      <q-inner-loading :showing="loading" label="Carregando..." label-class="text-teal"
+        label-style="font-size: 1.1em" />
     </q-card>
   </q-expansion-item>
 </template>

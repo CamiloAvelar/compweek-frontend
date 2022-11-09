@@ -1,20 +1,10 @@
 <template>
   <q-card class="relative-position list-card" bordered>
-    <q-btn-toggle
-      v-model="listType"
-      spread
-      class="list-toggle"
-      no-caps
-      rounded
-      unelevated
-      toggle-color="primary"
-      color="white"
-      text-color="primary"
-      :options="[
+    <q-btn-toggle v-model="listType" spread class="list-toggle" no-caps rounded unelevated toggle-color="primary"
+      color="white" text-color="primary" :options="[
         { label: 'Cobranças', value: 'cobs' },
         { label: 'Pix', value: 'pix' },
-      ]"
-    />
+      ]" />
 
     <div class="q-pa-md">
       <div class="q-gutter-md row items-start justify-around">
@@ -22,17 +12,8 @@
         <q-input dense v-model="date.from">
           <template v-slot:prepend>
             <q-icon name="event" class="cursor-pointer">
-              <q-popup-proxy
-                cover
-                transition-show="scale"
-                transition-hide="scale"
-              >
-                <q-date
-                  v-model="date"
-                  mask="YYYY-MM-DD HH:mm:ss"
-                  range
-                  no-unset
-                >
+              <q-popup-proxy cover transition-show="scale" transition-hide="scale">
+                <q-date v-model="date" mask="YYYY-MM-DD HH:mm:ss" range no-unset>
                   <div class="row items-center justify-end">
                     <q-btn v-close-popup label="Close" color="primary" flat />
                   </div>
@@ -45,49 +26,25 @@
         <q-input dense v-model="date.to">
           <template v-slot:prepend>
             <q-icon name="event" class="cursor-pointer">
-              <q-popup-proxy
-                cover
-                transition-show="scale"
-                transition-hide="scale"
-              >
-                <q-date
-                  v-model="date"
-                  mask="YYYY-MM-DD HH:mm:ss"
-                  range
-                  no-unset
-                >
+              <q-popup-proxy cover transition-show="scale" transition-hide="scale">
+                <q-date v-model="date" mask="YYYY-MM-DD HH:mm:ss" range no-unset>
                   <div class="row items-center justify-end">
                     <q-btn v-close-popup label="Close" color="primary" flat />
                   </div>
                 </q-date>
               </q-popup-proxy>
-            </q-icon> </template
-        ></q-input>
-        <q-btn
-          color="white"
-          text-color="gray"
-          round
-          icon="refresh"
-          @click="reload"
-        >
+            </q-icon>
+          </template>
+        </q-input>
+        <q-btn color="white" text-color="gray" round icon="refresh" @click="reload">
           <q-tooltip>Recarregar</q-tooltip>
         </q-btn>
       </div>
     </div>
 
-    <q-inner-loading
-      :showing="loading"
-      label="Carregando..."
-      label-class="text-teal"
-      label-style="font-size: 1.1em"
-    />
+    <q-inner-loading :showing="loading" label="Carregando..." label-class="text-teal" label-style="font-size: 1.1em" />
     <q-list>
-      <ListItem
-        v-show="showList"
-        v-for="item in items"
-        v-bind:key="item.itemId"
-        v-bind="item"
-      ></ListItem>
+      <ListItem v-show="showList" v-for="item in items" v-bind:key="item.itemId" v-bind="item"></ListItem>
     </q-list>
   </q-card>
 </template>
@@ -222,9 +179,8 @@ export default defineComponent({
 
         this.items = response.data.pix.map((pix) => {
           return {
-            itemDescription: `${pix.endToEndId} ${
-              pix.infoPagador ? ` - ${pix.infoPagador}` : ""
-            }`,
+            itemDescription: `${pix.endToEndId} ${pix.infoPagador ? ` - ${pix.infoPagador}` : ""
+              }`,
             itemValue: pix.valor,
             itemId: pix.endToEndId,
             type: "pix",

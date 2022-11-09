@@ -3,7 +3,7 @@
     switch-toggle-side
     expand-icon-toggle
     expand-separator
-    @show="openItem(txid)"
+    @show="openItem(itemId)"
   >
     <template v-slot:header>
       <q-item-section>
@@ -16,25 +16,10 @@
     </template>
     <q-separator></q-separator>
     <q-card class="card-example">
-      <q-card-section v-show="showData">
-        <ul>
-          <li>TxId: {{ item.cob.txid }}</li>
-          <li>Chave: {{ item.cob.chave }}</li>
-          <li>Solicitação Pagador: {{ item.cob.solicitacaoPagador }}</li>
-          <li>Status: {{ item.cob.status }}</li>
-          <li>Valor: {{ item.cob.valor.original }}</li>
-          <li>
-            Devedor:
-            <ul>
-              <li>Nome: {{ item.cob.devedor.nome }}</li>
-              <li>Documento: {{ item.cob.devedor.cpf }}</li>
-            </ul>
-          </li>
-        </ul>
-
-        <img :src="`${item.qrCode.imagemQrcode}`" />
+      <q-card-section v-if="showData">
+        <DetailedCob v-if="type === 'cob'" v-bind="item"></DetailedCob>
+        <DetailedPix v-if="type === 'pix'" v-bind="item"></DetailedPix>
       </q-card-section>
-
       <q-inner-loading
         :showing="loading"
         label="Please wait..."
@@ -48,21 +33,14 @@
 <script>
 import { defineComponent, ref } from "vue";
 import axios from "axios";
+import DetailedCob from "components/DetailedCob.vue";
+import DetailedPix from "components/DetailedPix.vue";
 
 export default defineComponent({
   name: "ListItem",
-  data() {
-    return {
-      item: {
-        cob: {
-          devedor: {},
-          valor: {},
-        },
-        qrCode: {
-          imageQrcode: "",
-        },
-      },
-    };
+  components: {
+    DetailedCob,
+    DetailedPix,
   },
   props: {
     itemValue: {
@@ -73,49 +51,42 @@ export default defineComponent({
       type: String,
       default: "#",
     },
-    txid: {
+    itemId: {
       type: String,
       default: "#",
     },
-    location: {
+    type: {
       type: String,
       default: "#",
-    },
-    solicitacaoPagador: {
-      type: String,
-      default: "#",
-    },
-    status: {
-      type: String,
-      default: "#",
-    },
-    valor: {
-      original: {
-        type: Number,
-        default: 0,
-      },
     },
   },
-  setup() {
+  setup(props) {
     const loading = ref(false);
     const showData = ref(false);
+    const item = ref(null);
 
     return {
       loading,
       showData,
+      item,
       async openItem(param) {
         try {
           showData.value = false;
           loading.value = true;
-
-          const response = await axios.get(
-            `https://k5iwoig99f.execute-api.sa-east-1.amazonaws.com/testing/pix/cob/${param}`
-          );
+          if (props.type === "cob") {
+            var response = await axios.get(
+              `https://k5iwoig99f.execute-api.sa-east-1.amazonaws.com/testing/pix/cob/${param}`
+            );
+          } else if (props.type === "pix") {
+            var response = await axios.get(
+              `https://k5iwoig99f.execute-api.sa-east-1.amazonaws.com/testing/pix/received/${param}`
+            );
+          }
 
           loading.value = false;
           showData.value = true;
 
-          this.item = response.data;
+          item.value = response.data;
         } catch (err) {
           console.log(err);
         }
@@ -128,6 +99,6 @@ export default defineComponent({
 <style scoped>
 .card-example {
   max-width: 650px;
-  height: 590px;
+  min-height: 190px;
 }
 </style>

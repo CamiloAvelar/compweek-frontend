@@ -85,7 +85,7 @@
       <ListItem
         v-show="showList"
         v-for="item in items"
-        v-bind:key="item.txid || item.endToEndId"
+        v-bind:key="item.itemId"
         v-bind="item"
       ></ListItem>
     </q-list>
@@ -104,27 +104,9 @@ export default defineComponent({
     ListItem,
   },
   data() {
-    function subtractMonths(date, months) {
-      const newDate = new Date(date);
-      newDate.setMonth(newDate.getMonth() - months);
-      return newDate;
-    }
-
-    function formatDate(date) {
-      return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(
-        2,
-        "0"
-      )}-${String(date.getDate()).padStart(2, "0")} ${String(
-        date.getHours()
-      ).padStart(2, "0")}:${String(date.getMinutes()).padStart(
-        2,
-        "0"
-      )}:${String(date.getSeconds()).padStart(2, "0")}`;
-    }
-
     const now = new Date();
-    const from = formatDate(subtractMonths(now, 5));
-    const to = formatDate(now);
+    const from = this.formatDate(this.subtractMonths(now, 5));
+    const to = this.formatDate(now);
 
     return {
       items: [],
@@ -166,10 +148,31 @@ export default defineComponent({
     },
   },
   methods: {
+    subtractMonths(date, months) {
+      const newDate = new Date(date);
+      newDate.setMonth(newDate.getMonth() - months);
+      return newDate;
+    },
+    formatDate(date) {
+      return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(
+        2,
+        "0"
+      )}-${String(date.getDate()).padStart(2, "0")} ${String(
+        date.getHours()
+      ).padStart(2, "0")}:${String(date.getMinutes()).padStart(
+        2,
+        "0"
+      )}:${String(date.getSeconds()).padStart(2, "0")}`;
+    },
     async reload() {
       this.loading = true;
       this.showList = false;
-      await this.loadList();
+
+      const now = new Date();
+      this.date = {
+        from: this.formatDate(this.subtractMonths(now, 5)),
+        to: this.formatDate(now),
+      };
     },
     async loadList() {
       if (this.listType === "cobs") {
@@ -194,6 +197,8 @@ export default defineComponent({
           return {
             itemDescription: `${cob.solicitacaoPagador} - ${cob.status}`,
             itemValue: cob.valor.original,
+            itemId: cob.txid,
+            type: "cob",
             ...cob,
           };
         });
@@ -222,6 +227,8 @@ export default defineComponent({
               pix.infoPagador ? ` - ${pix.infoPagador}` : ""
             }`,
             itemValue: pix.valor,
+            itemId: pix.endToEndId,
+            type: "pix",
             ...pix,
           };
         });

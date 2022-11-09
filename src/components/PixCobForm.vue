@@ -10,6 +10,7 @@
       <div class="text-h6">Criar cobrança Pix</div>
       <div class="q-pa-md" style="max-width: 650px">
         <q-form
+          ref="form"
           @submit="onSubmit"
           @reset="onReset"
           class="q-gutter-md"
@@ -84,6 +85,7 @@
 import { defineComponent, ref } from "vue";
 import { useQuasar } from "quasar";
 import axios from "axios";
+import DetailedCobModal from "components/DetailedCobModal.vue";
 
 export default defineComponent({
   name: "PixCobForm",
@@ -97,6 +99,8 @@ export default defineComponent({
     const loading = ref(false);
     const showForm = ref(true);
 
+    const form = ref(null);
+
     return {
       nomeDevedor,
       cpfDevedor,
@@ -104,13 +108,14 @@ export default defineComponent({
       solicitacaoPagador,
       loading,
       showForm,
+      form,
 
       async onSubmit() {
         try {
           loading.value = true;
           showForm.value = false;
 
-          const response = await axios.post(
+          const createdResponse = await axios.post(
             "https://k5iwoig99f.execute-api.sa-east-1.amazonaws.com/testing/pix/cob",
             {
               cpf: cpfDevedor.value,
@@ -120,6 +125,10 @@ export default defineComponent({
             }
           );
 
+          const cobResponse = await axios.get(
+            `https://k5iwoig99f.execute-api.sa-east-1.amazonaws.com/testing/pix/cob/${createdResponse.data.txid}`
+          );
+
           loading.value = false;
           showForm.value = true;
 
@@ -127,13 +136,24 @@ export default defineComponent({
             color: "green-4",
             textColor: "white",
             icon: "cloud_done",
-            message: "Submitted",
+            message: "Cobrança criada com sucesso.",
           });
 
-          nomeDevedor.value = null;
-          cpfDevedor.value = null;
-          valor.value = null;
-          solicitacaoPagador.value = null;
+          $q.dialog({
+            component: DetailedCobModal,
+            componentProps: cobResponse.data,
+          })
+            .onOk(() => {
+              console.log("OK");
+            })
+            .onCancel(() => {
+              console.log("Cancel");
+            })
+            .onDismiss(() => {
+              console.log("Called on OK or Cancel");
+            });
+
+          form.value.reset();
         } catch (err) {
           console.log(err);
           loading.value = false;

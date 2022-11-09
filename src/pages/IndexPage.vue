@@ -1,8 +1,8 @@
 <template>
-  <div id="q-app" style="min-height: 900vh">
+  <div id="q-app">
     <div class="q-pa-md row q-gutter-md" style="max-width: 650px">
-      <CobPixList></CobPixList>
       <PixCobForm></PixCobForm>
+      <CobPixList></CobPixList>
     </div>
   </div>
 </template>

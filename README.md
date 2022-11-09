@@ -1,41 +1,18 @@
 # Compweek (compweek)
 
-A Quasar Project
+Projeto inicial para realizar Criar e consultar cobranças Pix
 
-## Install the dependencies
+## Inicia projeto
 ```bash
-yarn
-# or
-npm install
+npm run setup
 ```
 
-### Start the app in development mode (hot-code reloading, error reporting, etc.)
+### Inicia o projeto para desenvolvimento
 ```bash
-quasar dev
+npm run dev
 ```
 
-
-### Lint the files
+### Buildar o aplicativo para produção
 ```bash
-yarn lint
-# or
-npm run lint
+npm run build
 ```
-
-
-### Format the files
-```bash
-yarn format
-# or
-npm run format
-```
-
-
-
-### Build the app for production
-```bash
-quasar build
-```
-
-### Customize the configuration
-See [Configuring quasar.config.js](https://v2.quasar.dev/quasar-cli-vite/quasar-config-js).

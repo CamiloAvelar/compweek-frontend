@@ -95,7 +95,6 @@
 <script>
 import { defineComponent, ref } from "vue";
 import ListItem from "components/ListItem.vue";
-import axios from "axios";
 let items = ref([]);
 
 export default defineComponent({
@@ -183,8 +182,8 @@ export default defineComponent({
     },
     async getCobs() {
       try {
-        const response = await axios.get(
-          "https://k5iwoig99f.execute-api.sa-east-1.amazonaws.com/testing/pix/list/cob",
+        const response = await this.$axios.get(
+          "/pix/list/cob",
           {
             params: {
               inicio: new Date(this.date.from).toISOString(),
@@ -211,8 +210,8 @@ export default defineComponent({
     },
     async getPix() {
       try {
-        const response = await axios.get(
-          "https://k5iwoig99f.execute-api.sa-east-1.amazonaws.com/testing/pix/list/received",
+        const response = await this.$axios.get(
+          "/pix/list/received",
           {
             params: {
               inicio: new Date(this.date.from).toISOString(),

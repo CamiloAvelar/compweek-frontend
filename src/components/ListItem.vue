@@ -32,7 +32,6 @@
 
 <script>
 import { defineComponent, ref } from "vue";
-import axios from "axios";
 import DetailedCob from "components/DetailedCob.vue";
 import DetailedPix from "components/DetailedPix.vue";
 
@@ -74,12 +73,12 @@ export default defineComponent({
           showData.value = false;
           loading.value = true;
           if (props.type === "cob") {
-            var response = await axios.get(
-              `https://k5iwoig99f.execute-api.sa-east-1.amazonaws.com/testing/pix/cob/${param}`
+            var response = await this.$axios.get(
+              `/pix/cob/${param}`
             );
           } else if (props.type === "pix") {
-            var response = await axios.get(
-              `https://k5iwoig99f.execute-api.sa-east-1.amazonaws.com/testing/pix/received/${param}`
+            var response = await this.$axios.get(
+              `/pix/received/${param}`
             );
           }
 

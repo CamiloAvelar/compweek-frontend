@@ -84,7 +84,6 @@
 <script>
 import { defineComponent, ref } from "vue";
 import { useQuasar } from "quasar";
-import axios from "axios";
 import DetailedCobModal from "components/DetailedCobModal.vue";
 
 export default defineComponent({
@@ -115,8 +114,8 @@ export default defineComponent({
           loading.value = true;
           showForm.value = false;
 
-          const createdResponse = await axios.post(
-            "https://k5iwoig99f.execute-api.sa-east-1.amazonaws.com/testing/pix/cob",
+          const createdResponse = await this.$axios.post(
+            "/pix/cob",
             {
               cpf: cpfDevedor.value,
               nome: nomeDevedor.value,
@@ -125,8 +124,8 @@ export default defineComponent({
             }
           );
 
-          const cobResponse = await axios.get(
-            `https://k5iwoig99f.execute-api.sa-east-1.amazonaws.com/testing/pix/cob/${createdResponse.data.txid}`
+          const cobResponse = await this.$axios.get(
+            `/pix/cob/${createdResponse.data.txid}`
           );
 
           loading.value = false;

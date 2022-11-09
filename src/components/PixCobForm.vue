@@ -83,44 +83,23 @@
 
 <script>
 import { defineComponent, ref } from "vue";
-import { useQuasar } from "quasar";
 import DetailedCobModal from "components/DetailedCobModal.vue";
 
 export default defineComponent({
   name: "PixCobForm",
-  setup() {
-    const $q = useQuasar();
-
-    const nomeDevedor = ref(null);
-    const cpfDevedor = ref(null);
-    const valor = ref(null);
-    const solicitacaoPagador = ref(null);
-    const loading = ref(false);
-    const showForm = ref(true);
-
-    const form = ref(null);
-
-    return {
-      nomeDevedor,
-      cpfDevedor,
-      valor,
-      solicitacaoPagador,
-      loading,
-      showForm,
-      form,
-
-      async onSubmit() {
+  methods: {
+    async onSubmit() {
         try {
-          loading.value = true;
-          showForm.value = false;
+          this.loading = true;
+          this.showForm = false;
 
           const createdResponse = await this.$axios.post(
             "/pix/cob",
             {
-              cpf: cpfDevedor.value,
-              nome: nomeDevedor.value,
-              valor: (+valor.value).toFixed(2),
-              solicitacaoPagador: solicitacaoPagador.value,
+              cpf: this.cpfDevedor,
+              nome: this.nomeDevedor,
+              valor: (+this.valor).toFixed(2),
+              solicitacaoPagador: this.solicitacaoPagador,
             }
           );
 
@@ -128,17 +107,17 @@ export default defineComponent({
             `/pix/cob/${createdResponse.data.txid}`
           );
 
-          loading.value = false;
-          showForm.value = true;
+          this.loading = false;
+          this.showForm = true;
 
-          $q.notify({
+          this.$q.notify({
             color: "green-4",
             textColor: "white",
             icon: "cloud_done",
             message: "Cobrança criada com sucesso.",
           });
 
-          $q.dialog({
+          this.$q.dialog({
             component: DetailedCobModal,
             componentProps: cobResponse.data,
           })
@@ -152,12 +131,11 @@ export default defineComponent({
               console.log("Called on OK or Cancel");
             });
 
-          form.value.reset();
         } catch (err) {
           console.log(err);
-          loading.value = false;
-          showForm.value = true;
-          $q.notify({
+          this.loading = false;
+          this.showForm = true;
+          this.$q.notify({
             color: "red-5",
             textColor: "white",
             icon: "warning",
@@ -165,13 +143,28 @@ export default defineComponent({
           });
         }
       },
+    onReset() {
+      this.nomeDevedor = null;
+      this.cpfDevedor = null;
+      this.valor = null;
+      this.solicitacaoPagador = null;
+    },
+  },
+  data() {
+    const nomeDevedor = ref(null);
+    const cpfDevedor = ref(null);
+    const valor = ref(null);
+    const solicitacaoPagador = ref(null);
+    const loading = ref(false);
+    const showForm = ref(true);
 
-      onReset() {
-        nomeDevedor.value = null;
-        cpfDevedor.value = null;
-        valor.value = null;
-        solicitacaoPagador.value = null;
-      },
+    return {
+      nomeDevedor,
+      cpfDevedor,
+      valor,
+      solicitacaoPagador,
+      loading,
+      showForm,
     };
   },
 });

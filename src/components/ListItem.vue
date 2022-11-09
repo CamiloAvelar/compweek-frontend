@@ -22,7 +22,7 @@
       </q-card-section>
       <q-inner-loading
         :showing="loading"
-        label="Please wait..."
+        label="Carregando..."
         label-class="text-teal"
         label-style="font-size: 1.1em"
       />

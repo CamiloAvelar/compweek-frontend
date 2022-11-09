@@ -243,6 +243,6 @@ export default defineComponent({
 
 <style>
 .list-toggle {
-  border: 1px solid #027be3;
+  border: 1px solid #fab26e;
 }
 </style>

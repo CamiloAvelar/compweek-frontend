@@ -2,7 +2,7 @@
   <q-card class="list-card" bordered>
     <q-inner-loading
       :showing="loading"
-      label="Carregando..."
+      label="Criando cobrança..."
       label-class="text-teal"
       label-style="font-size: 1.1em"
     />

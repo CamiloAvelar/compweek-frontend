@@ -7,7 +7,7 @@
       ]" />
 
     <div class="q-pa-md">
-      <div class="q-gutter-md row items-start justify-around">
+      <div class="q-gutter-md row items-start justify-center">
         <span style="align-self: center">De</span>
         <q-input dense v-model="date.from">
           <template v-slot:prepend>
@@ -36,7 +36,7 @@
             </q-icon>
           </template>
         </q-input>
-        <q-btn color="white" text-color="gray" round icon="refresh" @click="reload">
+        <q-btn color="white" text-color="gray" round icon="refresh" @click="reload" class="self-end">
           <q-tooltip>Recarregar</q-tooltip>
         </q-btn>
       </div>
@@ -151,9 +151,10 @@ export default defineComponent({
 
         this.items = response.data.cobs.map((cob) => {
           return {
-            itemDescription: `${cob.solicitacaoPagador} - ${cob.status}`,
+            itemDescription: cob.solicitacaoPagador,
             itemValue: cob.valor.original,
             itemId: cob.txid,
+            itemStatus: cob.status,
             type: "cob",
             ...cob,
           };
@@ -183,6 +184,7 @@ export default defineComponent({
               }`,
             itemValue: pix.valor,
             itemId: pix.endToEndId,
+            itemStatus: pix.devolucoes?.length > 0 ? "DEVOLVIDO" : "RECEBIDO",
             type: "pix",
             ...pix,
           };

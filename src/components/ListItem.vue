@@ -1,16 +1,25 @@
 <template>
   <q-expansion-item switch-toggle-side expand-icon-toggle expand-separator @show="openItem(itemId)">
     <template v-slot:header>
+      <q-item-section side>
+        <q-badge rounded :class="{
+          'bg-green': itemStatus === 'ATIVA' || itemStatus === 'RECEBIDO',
+          'bg-orange': itemStatus === 'CONCLUIDA' || itemStatus === 'DEVOLVIDO',
+          'bg-red': itemStatus === 'REMOVIDA_PELO_USUARIO_RECEBEDOR',
+          'bg-red': itemStatus === 'REMOVIDA_PELO_PSP'
+        }" :label=itemStatus />
+      </q-item-section>
       <q-item-section>
         {{ itemDescription }}
       </q-item-section>
 
       <q-item-section side>
-        <div class="row items-center">R$ {{ itemValue }}</div>
+        <div class="items-center">R$ {{ itemValue }}</div>
       </q-item-section>
+
     </template>
     <q-separator></q-separator>
-    <q-card class="card-example">
+    <q-card class="card-example" style="margin: auto;">
       <q-card-section v-if="showData">
         <DetailedCob v-if="type === 'cob'" v-bind="item"></DetailedCob>
         <DetailedPix v-if="type === 'pix'" v-bind="item"></DetailedPix>
@@ -18,7 +27,9 @@
       <q-inner-loading :showing="loading" label="Carregando..." label-class="text-teal"
         label-style="font-size: 1.1em" />
     </q-card>
+
   </q-expansion-item>
+
 </template>
 
 <script>
@@ -42,6 +53,10 @@ export default defineComponent({
       default: "#",
     },
     itemId: {
+      type: String,
+      default: "#",
+    },
+    itemStatus: {
       type: String,
       default: "#",
     },

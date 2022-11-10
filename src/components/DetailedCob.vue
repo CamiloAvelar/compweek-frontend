@@ -91,7 +91,7 @@
       </q-list>
     </q-card-section>
 
-    <q-card-section align="center">
+    <q-card-section align="center" v-if="cob.status === 'ATIVA'">
       <img :src="`${qrCode.imagemQrcode}`" />
     </q-card-section>
   </q-card>

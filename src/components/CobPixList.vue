@@ -149,7 +149,7 @@ export default defineComponent({
           }
         );
 
-        this.items = response.data.cobs.map((cob) => {
+        this.items = response.data.cobs?.map((cob) => {
           return {
             itemDescription: cob.solicitacaoPagador,
             itemValue: cob.valor.original,
@@ -178,7 +178,7 @@ export default defineComponent({
           }
         );
 
-        this.items = response.data.pix.map((pix) => {
+        this.items = response.data.pix?.map((pix) => {
           return {
             itemDescription: `${pix.endToEndId} ${pix.infoPagador ? ` - ${pix.infoPagador}` : ""
               }`,

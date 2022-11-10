@@ -3,7 +3,7 @@
     <q-btn-toggle v-model="listType" spread class="list-toggle" no-caps rounded unelevated toggle-color="primary"
       color="white" text-color="primary" :options="[
         { label: 'Cobranças', value: 'cobs' },
-        { label: 'Pix', value: 'pix' },
+        { label: 'Pix Recebidos', value: 'pix' },
       ]" />
 
     <div class="q-pa-md">

@@ -51,6 +51,12 @@ const linksList = [
     icon: "rss_feed",
     link: "https://instagram.com/gerencianet",
   },
+  {
+    title: "Vagas",
+    caption: "@gerencianet",
+    icon: "school",
+    link: "https://jobs.kenoby.com/gerencianet",
+  },
 ];
 
 export default defineComponent({
